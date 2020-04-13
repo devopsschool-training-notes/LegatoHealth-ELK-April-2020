@@ -1,0 +1,477 @@
+==========================================================
+9:30 AM IST - 12:30 PM  - Demo + LAB = 3 Hours - 
+12:30 PM IST - 1:30 PM  - LUNCH HOUR
+1:30 PM IST - 4:30 PM IST - Demo + LAB = 3 Hours - 
+==========================================================
+How to reach out to me?
+=============================
+Call me +91 8105843520
+=============================
+
+Lab infra - 
+=============================
+Demo - AWS
+Labs - AWS
+===========================
+Agenda - 
+
+Please join my meeting from your computer, tablet or smartphone.
+
+https://global.gotomeeting.com/join/632714285
+
+
+You can also dial in using your phone.
+(For supported devices, tap a one-touch number below to join instantly.)
+
+United States: +1 (872) 240-3212
+- One-touch: tel:+18722403212,,632714285#
+
+Access Code: 632-714-285
+=====================================================================
+=====================================================================
+How to install and Configure Elastic Search?
+https://www.devopsschool.com/tutorial/elasticsearch/elastic-search-single-node-installation-and-verification-
+
+guide.html
+
+AMI - RHEL-7.5_HVM_GA-20180322-x86_64-1-Hourly2-GP2 (ami-5b673c34)
+
+Demo - 13.127.253.218
+ec2-user
+key - 
+	LINUX + MAC = .pem
+	Windows = .ppk with putty
+
+======================================
+Package Download - https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.2-linux-x86_64.tar.gz
+
+    7  sudo yum install wget -y
+    8  clear
+    9  ls
+   10  wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.2-linux-x86_64.tar.gz
+   11  clear
+   12  ls
+   13  tar -zxvf elasticsearch-7.6.2-linux-x86_64.tar.gz
+   14  clear
+   15  ls
+   16  cd elasticsearch-7.6.2
+   17  ls
+   18  clear
+   19  ls
+   20  ls -1
+
+[ec2-user@ip-172-31-26-105 elasticsearch-7.6.2]$ ls -1
+bin			- Start and Stop ES
+config			- conf file of ES
+jdk			- java run time env.
+lib			- Jar file of ES
+LICENSE.txt
+logs			- logs of es
+modules
+NOTICE.txt
+plugins
+README.asciidoc
+data			- this place you have index(shared stored + replicas)
+
+[ec2-user@ip-172-31-26-105 bin]$ pwd
+/home/ec2-user/elasticsearch-7.6.2/jdk/bin
+[ec2-user@ip-172-31-26-105 bin]$ ./java --version
+openjdk 13.0.2 2020-01-14
+OpenJDK Runtime Environment AdoptOpenJDK (build 13.0.2+8)
+OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13.0.2+8, mixed mode, sharing)
+
+
+[ec2-user@ip-172-31-26-105 elasticsearch-7.6.2]$ ps -eaf | grep elas
+ec2-user  9968     1 99 08:37 pts/0    00:00:16 /home/ec2-user/elasticsearch-7.6.2/jdk/bin/java 
+-Des.networkaddress.cache.ttl=60 
+-Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m 
+-Djava.awt.headless=true 
+-Dfile.encoding=UTF-8 
+-Djna.nosys=true -XX:-OmitStackTraceInFastThrow 
+-Dio.netty.noUnsafe=true 
+-Dio.netty.noKeySetOptimization=true 
+-Dio.netty.recycler.maxCapacityPerThread=0 
+-Dio.netty.allocator.numDirectArenas=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -
+
+Djava.locale.providers=COMPAT -Xms1g -Xmx1g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:
+
++UseCMSInitiatingOccupancyOnly -Djava.io.tmpdir=/tmp/elasticsearch-3242027923847729867 -XX:
+
++HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=data -XX:ErrorFile=logs/hs_err_pid%p.log -Xlog:gc*,gc
+
++age=trace,safepoint:file=logs/gc.log:utctime,pid,tags:filecount=32,filesize=64m -
+
+XX:MaxDirectMemorySize=536870912 -Des.path.home=/home/ec2-user/elasticsearch-7.6.2 -Des.path.conf=/home/ec2-
+
+user/elasticsearch-7.6.2/config -Des.distribution.flavor=default -Des.distribution.type=tar -
+
+Des.bundled_jdk=true -cp /home/ec2-user/elasticsearch-7.6.2/lib/* org.elasticsearch.bootstrap.Elasticsearch -d 
+
+-p pid
+ec2-user  9985  9968  0 08:38 pts/0    00:00:00 /home/ec2-user/elasticsearch-7.6.2/modules/x-pack-
+
+ml/platform/linux-x86_64/bin/controller
+ec2-user  9996  9643  0 08:38 pts/0    00:00:00 grep --color=auto elas
+
+ES config file
+===========================
+/home/ec2-user/elasticsearch-7.6.2/config/elasticsearch.yml
+
+=====================================================
+How to check a HEALH of ES and Verfy a installation.
+
+curl http://localhost:9200
+ [ec2-user@ip-172-31-26-105 ~]$ curl http://localhost:9200
+{
+  "name" : "ip-172-31-26-105.ap-south-1.compute.internal",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "stwfnoi9RKeRAMtkUxw7Ew",
+  "version" : {
+    "number" : "7.6.2",
+    "build_flavor" : "default",
+    "build_type" : "tar",
+    "build_hash" : "ef48eb35cf30adf4db14086e8aabd07ef6fb113f",
+    "build_date" : "2020-03-26T06:34:37.794943Z",
+    "build_snapshot" : false,
+    "lucene_version" : "8.4.0",
+    "minimum_wire_compatibility_version" : "6.8.0",
+    "minimum_index_compatibility_version" : "6.0.0-beta1"
+  },
+  "tagline" : "You Know, for Search"
+}
+
+QUERY  --> API
+		CURL 
+		JAVA - DOT NET
+		KIBANA
+
+================================================================================
+
+=======================================================================================
+Elasticsearch VERIFICATION
+=======================================================================================
+$ curl http://localhost:9200
+{
+  "name" : "ip-172-31-26-105.ap-south-1.compute.internal",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "stwfnoi9RKeRAMtkUxw7Ew",
+  "version" : {
+    "number" : "7.6.2",
+    "build_flavor" : "default",
+    "build_type" : "tar",
+    "build_hash" : "ef48eb35cf30adf4db14086e8aabd07ef6fb113f",
+    "build_date" : "2020-03-26T06:34:37.794943Z",
+    "build_snapshot" : false,
+    "lucene_version" : "8.4.0",
+    "minimum_wire_compatibility_version" : "6.8.0",
+    "minimum_index_compatibility_version" : "6.0.0-beta1"
+  },
+  "tagline" : "You Know, for Search"
+}
+
+=======================================================================================
+To check the health of Elasticsearch
+=======================================================================================
+
+The cat API - The cat API print the info in JSON format, compact and aligned text which is easy to read by 
+
+Human eyes. 
+
+All the cat commands accept a query string parameter "help" to see all the headers and info they provide, and 
+
+the /_cat command alone lists all the available commands.
+
+$ curl -X GET "localhost:9200/_cat"
+
+=^.^=
+/_cat/allocation
+/_cat/shards
+/_cat/shards/{index}
+/_cat/master
+/_cat/nodes
+/_cat/tasks
+/_cat/indices
+/_cat/indices/{index}
+/_cat/segments
+/_cat/segments/{index}
+/_cat/count
+/_cat/count/{index}
+/_cat/recovery
+/_cat/recovery/{index}
+/_cat/health
+/_cat/pending_tasks
+/_cat/aliases
+/_cat/aliases/{alias}
+/_cat/thread_pool
+/_cat/thread_pool/{thread_pools}
+/_cat/plugins
+/_cat/fielddata
+/_cat/fielddata/{fields}
+/_cat/nodeattrs
+/_cat/repositories
+/_cat/snapshots/{repository}
+/_cat/templates
+
+=======================================================================================
+Verbose
+=======================================================================================
+Each of the commands accepts a query string parameter v to turn on verbose output.\
+$ curl -X GET "localhost:9200/_cat/master?v"
+
+=======================================================================================
+Help
+=======================================================================================
+Each of the commands accepts a query string parameter help which will output its available columns.
+$ curl -X GET "localhost:9200/_cat/master?help"
+
+=======================================================================================
+Headers
+=======================================================================================
+Each of the commands accepts a query string parameter h which forces only those columns to appear.
+$ curl -X GET 'localhost:9200/_cat/nodes?h=ip,port,heapPercent,name'
+
+
+=======================================================================================
+Few CAT Commands Output
+=======================================================================================
+# Check node’s health status:
+curl -XGET 'localhost:9200/_cluster/health?pretty'
+curl -XGET 'localhost:9200/_cat/health?v'
+curl localhost:9200/_cat/health?help
+curl 'localhost:9200/_cat/health?format=json&pretty'
+
+curl -XGET 'localhost:9200/_cat/indices?pretty'
+
+
+curl -XGET 'localhost:9200/_cat/nodes?pretty'
+curl -XGET 'localhost:9200/_cat/nodes?pretty'
+curl localhost:9200/_cat/nodes?v
+curl localhost:9200/_cat/nodes?help
+curl 'localhost:9200/_cat/nodes?format=json&pretty'
+
+curl -XGET 'localhost:9200/_cat/shards?pretty'
+curl -XGET 'localhost:9200/_cat/shards?pretty'
+curl localhost:9200/_cat/shards?v
+curl localhost:9200/_cat/shards?help
+curl 'localhost:9200/_cat/shards?format=json&pretty'
+
+curl -XGET 'localhost:9200/_cat/master?pretty'
+curl localhost:9200/_cat/master?v
+curl localhost:9200/_cat/master?help
+curl 'localhost:9200/_cat/master?format=json&pretty'
+
+#List all indices
+curl -XGET 'localhost:9200/_cat/indices?pretty'
+curl localhost:9200/_cat/indices?v
+curl localhost:9200/_cat/indices?help
+curl 'localhost:9200/_cat/indices?format=json&pretty'
+
+
+
+
+=======================================================================================
+Understanding Elasticsearch Keywords and Terminology
+=======================================================================================
+https://www.devopsschool.com/blog/understanding-elasticsearch-keywords-and-terminology/
+https://www.devopsschool.com/blog/understanding-elasticsearch-index-mapping-schema/
+
+
+
+=======================================================================================
+Elasticsearch Workflow - CRUD Operations
+=======================================================================================
+https://www.devopsschool.com/blog/understanding-rest-http-method-get-post-put-head-delete/
+Create
+Read
+Update
+Delete
+
+FORMAT
+curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'
+
+VERB - GET, POST, PUT, HEAD, or DELETE.
+GET (Retrieve information)
+POST (Create + Update)
+PUT (Create + Update)
+DELETE (Remove)
+
+
+
+PROTOCOL - http or https
+
+=======================================================================================
+CURL TO HTTP
+=======================================================================================
+Status codes indicate the result of the HTTP request.
+
+1XX – informational
+2XX – success
+3XX – redirection
+4XX – client error
+5XX – server error
+
+=======================================================================================
+Demo 1 - curl and listing all indices 
+
+
+curl -XGET 'localhost:9200/_cat/indices?v&pretty'
+
+# To create products index
+curl -XPUT 'localhost:9200/products?&pretty'
+
+# To create products-temp index
+curl -XPUT 'localhost:9200/products-temp?&pretty'
+
+curl -XGET 'localhost:9200/_cat/indices?v&pretty'
+
+# To create customers index
+curl -XPUT 'localhost:9200/customers?&pretty'
+
+# To create orders index
+curl -XPUT 'localhost:9200/orders?&pretty'
+
+curl -XGET 'localhost:9200/_cat/indices?v&pretty'
+
+=======================================================================================
+Index and Query a document
+=======================================================================================
+products -> index
+mobiles - Category OR TYPE
+1 - index UUID
+-d - Content of the document in JSON BODY
+
+
+curl -XPUT 'localhost:9200/products/mobiles/1?pretty' -H 'Content-Type: application/json' -d'
+{
+  "name": "iPhone 7",
+  "camera": "12MP",
+  "storage": "256GB",
+  "display": "4.7inch",
+  "battery": "1,960mAh",
+  "reviews": ["Incredibly happy after having used it for one week", "Best iPhone so far", "Very expensive, 
+
+stick to Android"]
+}
+'
+
+---OUTPUT------
+{
+  "_index" : "products",
+  "_type" : "mobiles",
+  "_id" : "1",
+  "_version" : 1,
+  "result" : "created",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
+  },
+  "_seq_no" : 0,
+  "_primary_term" : 1
+}
+
+{
+  "name": "iPhone 7",
+  "camera": "12MP",
+  "storage": "256GB",
+  "display": "4.7inch",
+  "battery": "1,960mAh",
+  "reviews": ["Incredibly happy after having used it for one week", "Best iPhone so far", "Very expensive, 
+
+stick to Android"]
+}
+'
+---OUTPUT------
+
+curl -XPUT 'localhost:9200/products/mobiles/2?pretty' -H 'Content-Type: application/json' -d'
+{
+  "name": "Samsung Galaxy",
+  "camera": "8MP",
+  "storage": "128GB",
+  "display": "5.2inch",
+  "battery": "1,500mAh",
+  "reviews": ["Best Android phone", "I love it!"]
+}
+'
+curl -XPUT 'localhost:9200/products/mobiles/3?pretty' -H 'Content-Type: application/json' -d'
+{
+  "name": "Xiaomi Note",
+  "camera": "10MP",
+  "storage": "128GB",
+  "display": "5.5inch",
+  "battery": "1,500mAh",
+  "reviews": ["Really love Xiaomi products", "Too large to use easily"]
+}
+'
+ERROR
+--------
+Multiple mapping types are not supported in indices created in 6.0
+------------------------------
+curl -XPUT 'localhost:9200/products/laptops/1?pretty' -H 'Content-Type: application/json' -d'
+{
+  "name": "Macbook Pro",
+  "storage": "500GB",
+  "RAM": "8GB",
+  "display": "13inch",
+  "os": "El Capitan",
+  "reviews": ["A little bulky but a great Mac laptop", "The larger storage capacity is great"]
+}
+'
+ERROR
+--------
+Multiple mapping types are not supported in indices created in 6.0
+------------------------------
+curl -XPUT 'localhost:9200/products-temp/laptops/1?pretty' -H 'Content-Type: application/json' -d'
+{
+  "name": "Macbook Pro",
+  "storage": "500GB",
+  "RAM": "8GB",
+  "display": "13inch",
+  "os": "El Capitan",
+  "reviews": ["A little bulky but a great Mac laptop", "The larger storage capacity is great"]
+}
+'
+
+
+curl -XPUT 'localhost:9200/products-temp/laptops/2?pretty' -H 'Content-Type: application/json' -d'
+{
+  "name": "Dell",
+  "storage": "1TB",
+  "RAM": "8GB",
+  "display": "14inch",
+  "os": "Windows 10",
+  "reviews": ["Great work laptop", "Not too heavy"]
+}
+'
+
+curl -XPOST 'localhost:9200/products/mobiles?pretty' -H 'Content-Type: application/json' -d'
+{
+  "name": "iPhone 6s",
+  "camera": "12MP",
+  "storage": "128GB",
+  "display": "4.7inch",
+  "battery": "1,960mAh",
+  "reviews": ["Incredibly happy after having used it for one week", "Best iPhone so far", "Very expensive, 
+
+stick to Android"]
+}
+'
+
+curl -XPOST 'localhost:9200/products/mobiles/4?pretty' -H 'Content-Type: application/json' -d'
+{
+  "name": "iPhone 6s",
+  "camera": "12MP",
+  "storage": "128GB",
+  "display": "4.7inch",
+  "battery": "1,960mAh",
+  "reviews": ["Incredibly happy after having used it for one week", "Best iPhone so far", "Very expensive, 
+
+stick to Android"]
+}
+'
+
+
+
+
+
+
