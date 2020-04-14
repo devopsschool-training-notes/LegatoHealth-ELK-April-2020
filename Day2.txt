@@ -1,0 +1,8 @@
+How to start ES with network host?
+================================================
+https://www.devopsschool.com/blog/how-to-enable-elastic-search-rest-api-accessible-using-ip-address/
+
+How to troubelshoot?
+==================================================
+Elasticsearch-ELK Errors and Solutions Database
+https://www.devopsschool.com/blog/elasticsearch-elk-errors-and-solutions-database/
