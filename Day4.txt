@@ -1,0 +1,113 @@
+Start 1
+	ELK - DEMO(DONE) | LAB(Pending)
+==========================================
+	3 VMs -> 2 CPU - 4 GB
+	========================
+	Master +  BEATS + LOGSTASH + KIBANA
+	Data
+	Client
+
+	ELK
+	BEATS --> LOGSTASH -> ES <-- KIBANA
+	========================================
+	BEATS Overview again	--	
+	What is beats?
+	====================
+	APP running - Keep Reading a Data(Stream-Line-Output) from Diff Sources.
+		Sources includes
+			file
+			system logs
+			system statictics (cpu + ram + io)
+			database
+			apps
+				tomcat
+				apache
+				nginx
+				jvm
+	Which are list of Beats avaialble?
+	https://www.elastic.co/beats/
+	
+	How it works?
+	filebeat.yml
+		Filebeat inputs
+		Outputs
+	==========================================
+	BEATS --> LOG 	-> ES
+		  YES
+		  --------------
+		  PARSE
+	-----------------------------
+	field -
+		host
+		source
+		timestamps
+		
+		  
+	
+
+	LOGSTASH Overview again	-- 
+===========================================
+	- BEAT -> LOG -> ES
+	
+	
+	parser
+	output.
+=================================
+
+
+	 
+	
+	KIBANA - Overview	-- 
+	KIBANA - KQL		-- 
+	KIBANA - Visualization	-- 
+	KIBANA - Dashboard	-- 
+
+	Security with XPACK	--	
+		With ES
+		Kibana
+
+	AWS ElasticSearch Service		DONE
+	====================================
+	
+	Demo till 3.30 PM IST
+	---------------
+	Lab from 3.30 PM IST
+=====================================
+LOGSTASH 
+	Parser
+	Which index?
+
+		
+	
+ELK - LAB
+
+============================================
+Step 1 - Upload sample data or from es or upload from csv
+
+Step 2 - Create a Index pattern.
+http://13.235.94.237:5601/app/kibana#/management/kibana/index_patterns?_g=()
+
+Step 3 - Discover it
+		- Understand your Document Fields.
+
+Step 4 - Visualize it
+
+Step 5 - Dashboard
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

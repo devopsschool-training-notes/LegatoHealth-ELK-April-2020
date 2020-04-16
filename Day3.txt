@@ -1,0 +1,50 @@
+
+Elasticsearch Cluster Setup and Configuration Tutorial step by step using AWS ec2
+======================================================
+https://www.devopsschool.com/blog/elasticsearch-cluster-setup-and-configuration-tutorial-step-by-step-using-aws-ec2/
+
+Master - 15.206.159.12		172.31.18.75
+
+cluster.name: devopsschool
+node.name: es-master01
+node.master: true
+node.data: false
+network.host: 172.31.18.75
+cluster.initial_master_nodes: ["es-master01"]
+
+Data -  13.232.47.192		172.31.31.157
+
+cluster.name: devopsschool
+node.name: es-data01
+node.master: false
+node.data: true
+network.host: 172.31.31.157
+cluster.initial_master_nodes: ["es-master01"]
+
+
+Client - 35.154.251.245		172.31.26.247
+
+cluster.name: devopsschool
+node.name: es-client01
+node.master: false
+node.data: false
+network.host: 172.31.26.247
+cluster.initial_master_nodes: ["es-master01"]
+
+
+172.31.18.75	es-master01
+172.31.31.157	es-data01
+172.31.26.247	es-client01
+
+
+
+curl http://172.31.26.247:9200
+curl -X GET "172.31.26.247:9200/_cat/master?v"
+curl -XGET '172.31.26.247:9200/_cat/nodes?pretty'
+curl -XGET http://172.31.26.247:9200/_cluster/health?pretty 
+
+
+discovery.seed_hosts: ["172.31.18.75","172.31.31.157","172.31.26.247"]
+VS
+discovery.zen.ping.unicast.hosts: "dssd","sdfS"
+discovery.zen.ping.multicast.enabled: false
