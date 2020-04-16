@@ -1,0 +1,13 @@
+When you create an index, you can define how many shards you want.  Each shard is an independent Lucene index that can be hosted anywhere in your cluster:
+
+# Example
+curl -XPUT localhost:9200/example -d '{
+  "settings" : {
+    "index" : {
+      "number_of_shards" : 2, 
+      "number_of_replicas" : 1 
+    }
+  }
+}'
+
+Like with shards, the number of replicas can be defined per index when the index is created. 

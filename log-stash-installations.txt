@@ -1,0 +1,181 @@
+13.233.139.82
+https://www.elastic.co/downloads/logstash
+========================LOGSTASH===========================
+$ sudo yum install wget -y
+$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.2.0-linux-x86_64.tar.gz
+$ tar -xzf elasticsearch-7.2.0-linux-x86_64.tar.gz
+
+export JAVA_HOME=/home/ec2-user/elasticsearch/jdk
+export PATH=$PATH:$JAVA_HOME/bin
+java --version
+
+$ wget https://artifacts.elastic.co/downloads/logstash/logstash-7.2.0.tar.gz
+$ tar -zxvf logstash-7.2.0.tar.gz
+cd logstash-7.2.0
+bin/logstash -e 'input { stdin { } } output { stdout {} }'
+================================================================================================
+---------------------filebeat--------------------
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.2.0-linux-x86_64.tar.gz
+tar xzvf filebeat-7.2.0-linux-x86_64.tar.gz
+---------------------------------------------------------
+wget https://www.devopsschool.com/notes/elastic/elasticsearch/logstash-tutorial.log.gz
+gunzip logstash-tutorial.log.gz
+/home/ec2-user/logstash-tutorial.log
+==============================================
+
+vi filebeat-7.2.0-linux-x86_64/filebeat.yml
+
+enabled: true
+
+filebeat.inputs:
+- type: log
+  paths:
+    - /path/to/file/logstash-tutorial.log 
+output.logstash:
+  hosts: ["localhost:5044"]
+
+=====================================
+cd filebeat-7.2.0-linux-x86_64/
+sudo chown root filebeat.yml
+sudo ./filebeat -e -c filebeat.yml -d "publish"
+------------------------------------------------------
+vi logstash-7.2.0/first-pipeline.conf
+
+input {
+    beats {
+        port => "5044"
+    }
+}
+# The filter part of this file is commented out to indicate that it is
+# optional.
+# filter {
+#
+# }
+output {
+    stdout { codec => rubydebug }
+}
+
+=============================================
+To verify your configuration, run the following command:
+$ bin/logstash -f first-pipeline.conf --config.test_and_exit
+The --config.test_and_exit option parses your configuration file and reports any errors.
+
+=======================================================
+
+If the configuration file passes the configuration test, start Logstash with the following command:
+
+bin/logstash -f first-pipeline.conf --config.reload.automatic
+The --config.reload.automatic option enables automatic config reloading so that you don’t have to stop and restart Logstash every time you modify the configuration file.
+==================================================================
+
+
+To do this, go to the terminal window where Filebeat is running and press Ctrl+C to shut down Filebeat. Then delete the Filebeat registry file. For example, run:
+
+cd /home/ec2-user/filebeat-7.2.0-linux-x86_64
+sudo rm -rf data/registry
+sudo chown root filebeat.yml
+sudo ./filebeat -e -c filebeat.yml -d "publish"
+sudo ./filebeat -e -c filebeat.yml -d "publish"
+==================================================
+The Logstash pipeline can index the data into an Elasticsearch cluster. Edit the first-pipeline.conf file and replace the entire output section with the following text:
+
+output {
+    elasticsearch {
+        hosts => [ "localhost:9200" ]
+    }
+}
+
+output {
+    elasticsearch {
+        hosts => [ "172.31.26.247:9200" ]
+    }
+}
+
+=================================================
+curl -X GET "172.31.26.247:9200/_cat/indices?v"
+curl -XGET '172.31.11.126:9200/logstash-$DATE/_search?pretty&q=response=200'
+curl -XGET '172.31.11.126:9200/logstash-2019.07.12-000001/_search?pretty&q=response=200'
+
+
+The -e flag enables you to specify a configuration directly from the command line. Specifying configurations at the command line lets you quickly test configurations without having to edit a file between iterations. The pipeline in the example takes input from the standard input, stdin, and moves that input to the standard output, stdout, in a structured format.
+
+After starting Logstash, wait until you see "Pipeline main started" and then enter hello world at the command prompt:
+
+hello world
+2013-11-21T01:22:14.405+0000 0.0.0.0 hello world
+
+Logstash adds timestamp and IP address information to the message. Exit Logstash by issuing a CTRL-D command in the shell where Logstash is running.
+
+In Stashing Your First Event, you created a basic Logstash pipeline to test your Logstash setup. In the real world, a Logstash pipeline is a bit more complex: it typically has one or more 
+	input, 
+	filter, and 
+	output plugins.
+
+In this section, you create a Logstash pipeline that uses Filebeat to take Apache web logs as input, parses those logs to create specific, 
+		named fields from the logs, and 
+		writes the parsed data to an Elasticsearch cluster.
+Rather than defining the pipeline configuration at the command line, you’ll define the pipeline in a config file.
+
+To get started, go here to download the sample data set used in this example. Unpack the file.
+wget https://download.elastic.co/demos/logstash/gettingstarted/logstash-tutorial.log.gz
+
+Step 1 - Install Filebeat 
+Before you create the Logstash pipeline, you’ll configure Filebeat to send log lines to Logstash.
+
+Filebeat client is a lightweight, resource-friendly tool that collects logs from files on the server and forwards these logs to your Logstash instance for processing. Filebeat is designed for reliability and low latency. Filebeat has a light resource footprint on the host machine, and the Beats input plugin minimizes the resource demands on the Logstash instance.
+
+
+
+wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.2.0-linux-x86_64.tar.gz
+tar -zxvf filebeat-7.2.0-linux-x86_64.tar.gz
+
+Step 2 - configure Filebeat
+
+Open the filebeat.yml file located in your Filebeat installation directory, and replace the contents with the following lines. Make sure paths points to the example Apache log file, logstash-tutorial.log, that you downloaded earlier:
+
+filebeat.inputs:
+- type: log
+  paths:
+    - /path/to/file/logstash-tutorial.log 
+output.logstash:
+  hosts: ["localhost:5044"]
+
+
+Step 3 - configure Filebeat
+
+At the data source machine, run Filebeat with the following command:
+sudo ./filebeat -e -c filebeat.yml -d "publish"
+ 
+Filebeat will attempt to connect on port 5044. Until Logstash starts with an active Beats plugin, there won’t be any answer on that port, so any messages you see regarding failure to connect on that port are normal for now.
+
+Step 3 - Configuring Logstash for Filebeat Input
+
+Next, you create a Logstash configuration pipeline that uses the Beats input plugin to receive events from Beats.
+vi first-pipeline.conf
+
+input {
+    beats {
+        port => "5044"
+    }
+}
+# The filter part of this file is commented out to indicate that it is
+# optional.
+# filter {
+#
+# }
+output {
+    stdout { codec => rubydebug }
+}
+
+Step 4 - 
+To verify your configuration, run the following command:
+bin/logstash -f first-pipeline.conf --config.test_and_exit
+The --config.test_and_exit option parses your configuration file and reports any errors.
+
+bin/logstash -f first-pipeline.conf --config.reload.automatic
+The --config.reload.automatic option enables automatic config reloading so that you don’t have to stop and restart Logstash every time you modify the configuration file.
+
+If your pipeline is working correctly, you should see a series of events like the following written to the console:
+https://www.elastic.co/webinars/getting-started-kibana
+https://www.elastic.co/guide/en/logstash/current/advanced-pipeline.html
+https://www.elastic.co/guide/en/logstash/current/index.html
